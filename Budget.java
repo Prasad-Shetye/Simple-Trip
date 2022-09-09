@@ -20,6 +20,10 @@ public class Budget {
 		totalBudgetAmount += amount;
 		allBudgets.add(this);
 	}
+	
+	public String getName() {
+		return budgetName;
+	}
 	public void addExpense(String name, double amnt) {
 		budgetExpenses.add(new Expense(name, amnt));
 		currentSpending += amnt;
@@ -73,7 +77,48 @@ public class Budget {
 		totalBudgetWeeks = (30-day)/7.0;
 		return getTotalRemainingBudget()/totalBudgetWeeks;
 	}
-
+	
+	public String simplified() {
+		String output = "Total Budget Amount: $" + budgetAmount + "\n";
+		output += "Total Amount Spent From Budget: $" + currentSpending + "\n";
+		output += "Total Amount Remaining: $" + getRemainingBudget();
+		
+		return output;
+	}
+	
+	public static String returnAllBudgets() {
+		String output = "";
+		for(Budget x: allBudgets) {
+			output += x.simplified() + "\n";
+		}
+		return output;
+	}
+	
+	public static Budget findBudget(String budgetName) {
+		int tracker = -1;
+		Budget returned;
+		for(int i = 0; i < allBudgets.size(); i++) {
+			if(allBudgets.get(i).getName().equals(budgetName)) {
+				tracker = i;
+				break;
+			}
+		}
+		if(tracker > -1) {
+			returned = allBudgets.get(tracker); 
+		}
+		else {
+			returned = null;
+		}
+		return returned;
+	}
+	
+	public static String returnNames() {
+		String output = "";
+		for(Budget x: allBudgets) {
+			output += x.getName() + "\n";
+		}
+		return output;
+	}
 	
 	public String toString() {
 		toString += budgetName + "Budget: ";
